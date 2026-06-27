@@ -14,7 +14,7 @@ export default function PreordersListPage() {
   const [sortBy, setSortBy] = useState('createdAt');
   const [order, setOrder] = useState('desc');
   const [page, setPage] = useState(1);
-  const [limit] = useState(10);
+  const [limit] = useState(8);
   const [total, setTotal] = useState(0);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -29,6 +29,11 @@ export default function PreordersListPage() {
         const data = await res.json();
         setPreorders(data.preorders);
         setTotal(data.total);
+
+        const maxPage = Math.ceil(data.total / limit) || 1;
+        if (page > maxPage) {
+          setPage(maxPage);
+        }
       }
     } catch (err) {
       console.error('Error fetching preorders client-side:', err);
@@ -135,7 +140,7 @@ export default function PreordersListPage() {
         />
 
         {/* Pagination Section */}
-        {!isLoading && preorders.length > 0 && (
+        {!isLoading && total > 0 && (
           <Pagination
             page={page}
             limit={limit}
