@@ -1,5 +1,15 @@
-import "dotenv/config";
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { defineConfig, env } from "prisma/config";
+
+// Load local .env file in development if DATABASE_URL is not already set by host platform
+if (!process.env.DATABASE_URL) {
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    require("dotenv").config();
+  } catch (e) {
+    // Ignore error if dotenv is missing in production environments
+  }
+}
 
 export default defineConfig({
   schema: "prisma/schema.prisma",
