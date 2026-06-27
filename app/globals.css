@@ -1,26 +1,95 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
+  --background: #f8f9fa;
   --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --card-background: #ffffff;
+  --border-color: #e5e7eb;
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* Form inputs styling */
+input[type="text"],
+input[type="number"],
+input[type="datetime-local"],
+select {
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 8px 12px;
+  outline: none;
+  font-size: 14px;
+  background-color: #ffffff;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="datetime-local"]:focus,
+select:focus {
+  border-color: #000000;
+  box-shadow: 0 0 0 1px #000000;
+}
+
+/* Custom Radix Switch styling matching the screenshot */
+button[role="switch"] {
+  width: 44px;
+  height: 24px;
+  background-color: #e5e7eb;
+  border-radius: 9999px;
+  position: relative;
+  transition: background-color 0.2s ease;
+  cursor: pointer;
+  border: none;
+}
+
+button[role="switch"][data-state="checked"] {
+  background-color: #000000;
+}
+
+button[role="switch"] span[data-state] {
+  display: block;
+  width: 18px;
+  height: 18px;
+  background-color: #ffffff;
+  border-radius: 9999px;
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  transition: transform 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+button[role="switch"][data-state="checked"] span[data-state] {
+  transform: translateX(20px);
+}
+
+/* Custom Radix Checkbox styling */
+button[role="checkbox"] {
+  width: 18px;
+  height: 18px;
+  border: 1px solid #c5c7cb;
+  border-radius: 4px;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+
+button[role="checkbox"]:focus {
+  border-color: #000000;
+}
+
+button[role="checkbox"][data-state="checked"] {
+  background-color: #000000;
+  border-color: #000000;
+  color: #ffffff;
 }
