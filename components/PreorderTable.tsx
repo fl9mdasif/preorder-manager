@@ -105,7 +105,7 @@ export default function PreorderTable({
                 className="flex items-center justify-center rounded border border-[#c5c7cb] w-4 h-4 bg-white"
               >
                 <Checkbox.Indicator className="text-white bg-black w-full h-full flex items-center justify-center rounded-[3px]">
-                  <Check className="w-3 h-3 stroke-[3]" />
+                  <Check className="w-3 h-3 stroke-3" />
                 </Checkbox.Indicator>
               </Checkbox.Root>
             </th>
@@ -135,7 +135,7 @@ export default function PreorderTable({
                     className="flex items-center justify-center rounded border border-[#c5c7cb] w-4 h-4 bg-white"
                   >
                     <Checkbox.Indicator className="text-white bg-black w-full h-full flex items-center justify-center rounded-[3px]">
-                      <Check className="w-3 h-3 stroke-[3]" />
+                      <Check className="w-3 h-3 stroke-3" />
                     </Checkbox.Indicator>
                   </Checkbox.Root>
                 </td>
