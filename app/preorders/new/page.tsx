@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 import PreorderForm from '@/components/PreorderForm';
 
 export default function CreatePreorderPage() {
@@ -20,15 +21,16 @@ export default function CreatePreorderPage() {
       });
 
       if (res.ok) {
+        toast.success('Preorder created successfully');
         router.push('/');
         router.refresh();
       } else {
         const errorData = await res.json();
-        alert(errorData.error || 'Failed to create preorder');
+        toast.error(errorData.error || 'Failed to create preorder');
       }
     } catch (error) {
       console.error('Error creating preorder:', error);
-      alert('An error occurred while creating the preorder');
+      toast.error('An error occurred while creating the preorder');
     } finally {
       setIsSaving(false);
     }

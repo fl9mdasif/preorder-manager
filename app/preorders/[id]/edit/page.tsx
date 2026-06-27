@@ -3,6 +3,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter, useParams } from 'next/navigation';
+import { toast } from 'sonner';
 import PreorderForm from '@/components/PreorderForm';
 
 export default function EditPreorderPage() {
@@ -24,12 +25,12 @@ export default function EditPreorderPage() {
           const data = await res.json();
           setInitialData(data);
         } else {
-          alert('Preorder not found');
+          toast.error('Preorder not found');
           router.push('/');
         }
       } catch (err) {
         console.error('Error fetching preorder:', err);
-        alert('Failed to load preorder data');
+        toast.error('Failed to load preorder data');
         router.push('/');
       } finally {
         setIsLoading(false);
@@ -51,15 +52,16 @@ export default function EditPreorderPage() {
       });
 
       if (res.ok) {
+        toast.success('Preorder updated successfully');
         router.push('/');
         router.refresh();
       } else {
         const errorData = await res.json();
-        alert(errorData.error || 'Failed to update preorder');
+        toast.error(errorData.error || 'Failed to update preorder');
       }
     } catch (error) {
       console.error('Error updating preorder:', error);
-      alert('An error occurred while saving the preorder');
+      toast.error('An error occurred while saving the preorder');
     } finally {
       setIsSaving(false);
     }

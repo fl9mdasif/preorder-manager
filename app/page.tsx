@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useCallback } from 'react';
 import Link from 'next/link';
+import { toast } from 'sonner';
 import PreorderFilters from '@/components/PreorderFilters';
 import SortDropdown from '@/components/SortDropdown';
 import PreorderTable, { Preorder } from '@/components/PreorderTable';
@@ -53,12 +54,14 @@ export default function PreordersListPage() {
         body: JSON.stringify({ isActive: newStatus }),
       });
 
-      if (!res.ok) {
+      if (res.ok) {
+        toast.success(`Preorder set to ${newStatus ? 'Active' : 'Inactive'}`);
+      } else {
         // Rollback
         setPreorders((prev) =>
           prev.map((p) => (p.id === id ? { ...p, isActive: !newStatus } : p))
         );
-        alert('Failed to update preorder status');
+        toast.error('Failed to update preorder status');
       }
     } catch (err) {
       console.error(err);
@@ -66,6 +69,7 @@ export default function PreordersListPage() {
       setPreorders((prev) =>
         prev.map((p) => (p.id === id ? { ...p, isActive: !newStatus } : p))
       );
+      toast.error('Failed to update preorder status');
     }
   };
 
@@ -77,12 +81,14 @@ export default function PreordersListPage() {
       });
       if (res.ok) {
         setSelectedIds((prev) => prev.filter((selectedId) => selectedId !== id));
+        toast.success('Preorder deleted successfully');
         fetchPreorders();
       } else {
-        alert('Failed to delete preorder');
+        toast.error('Failed to delete preorder');
       }
     } catch (err) {
       console.error(err);
+      toast.error('Failed to delete preorder');
     }
   };
 
