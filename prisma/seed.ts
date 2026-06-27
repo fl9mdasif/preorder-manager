@@ -1,9 +1,6 @@
 import { PrismaClient } from '@prisma/client';
-import { PrismaBetterSqlite3 } from '@prisma/adapter-better-sqlite3';
 
-const dbUrl = process.env.DATABASE_URL || 'file:./dev.db';
-const adapter = new PrismaBetterSqlite3({ url: dbUrl });
-const prisma = new PrismaClient({ adapter });
+const prisma = new PrismaClient();
 
 async function main() {
   console.log('Seeding preorders database...');
@@ -17,8 +14,8 @@ async function main() {
       name: 'iPhone 16 Pro Max',
       products: 150,
       preorderWhen: 'regardless-of-stock',
-      startsAt: new Date(Date.now() - 24 * 60 * 60 * 1000), // Started yesterday
-      endsAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // Ends in 30 days
+      startsAt: new Date(Date.now() - 24 * 60 * 60 * 1000),
+      endsAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
       isActive: true,
     },
     {
@@ -35,7 +32,7 @@ async function main() {
       name: 'Nintendo Switch 2',
       products: 200,
       preorderWhen: 'regardless-of-stock',
-      startsAt: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000), // Starts in 10 days
+      startsAt: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000),
       endsAt: new Date(Date.now() + 40 * 24 * 60 * 60 * 1000),
       isActive: true,
     },
@@ -54,7 +51,7 @@ async function main() {
       products: 80,
       preorderWhen: 'regardless-of-stock',
       startsAt: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000),
-      endsAt: new Date(Date.now() - 24 * 60 * 60 * 1000), // Ended yesterday
+      endsAt: new Date(Date.now() - 24 * 60 * 60 * 1000),
       isActive: false,
     },
     {
@@ -63,7 +60,7 @@ async function main() {
       products: 10,
       preorderWhen: 'out-of-stock',
       startsAt: new Date(Date.now() + 20 * 24 * 60 * 60 * 1000),
-      endsAt: null, // No end date
+      endsAt: null,
       isActive: true,
     },
     {
@@ -81,15 +78,13 @@ async function main() {
       products: 60,
       preorderWhen: 'out-of-stock',
       startsAt: new Date(Date.now() - 20 * 24 * 60 * 60 * 1000),
-      endsAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000), // Ended 5 days ago
+      endsAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000),
       isActive: false,
     },
   ];
 
   for (const preorder of preordersData) {
-    await prisma.preorder.create({
-      data: preorder,
-    });
+    await prisma.preorder.create({ data: preorder });
   }
 
   console.log('Seeding completed successfully!');
